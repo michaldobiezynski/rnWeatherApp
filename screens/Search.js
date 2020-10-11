@@ -14,9 +14,19 @@ const Search = () => {
     )
       .then((item) => item.json())
       .then((cityData) => {
-        if (cityData.location.address) {
-          console.log(cityData.location.address.slice(0, 9));
-          setCities(cityData.location.address.slice(0, 9));
+        if (cityData !== undefined) {
+          if (cityData.location !== undefined) {
+            if (cityData.location.address !== undefined) {
+              console.log(cityData.location.address.slice(0, 9));
+              setCities(cityData.location.address.slice(0, 9));
+            } else {
+              setCities([]);
+            }
+          } else {
+            setCities([]);
+          }
+        } else {
+          setCities([]);
         }
       })
       .catch((error) => console.error(error));
