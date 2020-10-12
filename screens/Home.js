@@ -3,7 +3,7 @@ import {View, Text, FlatList, Image} from 'react-native';
 import {TextInput, Button, Card, Title} from 'react-native-paper';
 import Header from './Header';
 
-const Home = () => {
+const Home = (props) => {
   const [info, setInfo] = useState({
     name: 'loading',
     temp: 'loading',
@@ -13,7 +13,11 @@ const Home = () => {
   });
 
   const getWeather = () => {
-    fetch(`http://api.weatherstack.com/current?access_key=fc87f55c77c5849e40978cc051a3cd02&query=london&units=m`)
+      let myCity;
+      const {city} = props.route.params;
+      myCity = city;
+
+    fetch(`http://api.weatherstack.com/current?access_key=fc87f55c77c5849e40978cc051a3cd02&query=${myCity}&units=m`)
         .then(data=>data.json())
         .then(results => {
             console.log(results.location.name);
@@ -31,8 +35,16 @@ const Home = () => {
         })
   }
 
+
+
   useEffect(() => {
-    getWeather();
+      console.log(props.route.params)
+      if(props.route.params.city !== undefined) {
+          getWeather();
+      }
+      if(props.route.params.city !== "Edinburgh") {
+        getWeather()
+    }
   }, []);
 
   return (

@@ -3,7 +3,7 @@ import {View, Text, FlatList} from 'react-native';
 import {TextInput, Button, Card} from 'react-native-paper';
 import Header from './Header';
 
-const Search = () => {
+const Search = ({navigation}) => {
   const [city, setCity] = useState('');
   const [cities, setCities] = useState([]);
 
@@ -31,6 +31,17 @@ const Search = () => {
       })
       .catch((error) => console.error(error));
   };
+
+  const btnClick = () => {
+    navigation.navigate("home",{city:city})
+  }
+
+  const listClick = (cityName) => {
+    setCity(cityName);
+    navigation.navigate("home",{city:cityName})
+
+  }
+
   return (
     <View style={{flex: 1}}>
       <Header name="SearchScreen" />
@@ -47,7 +58,7 @@ const Search = () => {
         mode="contained"
         theme={{colors: {primary: '#00aaff'}}}
         style={{margin: 20}}
-        onPress={() => console.log('Pressed')}>
+        onPress={() => btnClick()}>
         <Text style={{color: 'white'}}>Press me</Text>
       </Button>
 
@@ -55,7 +66,7 @@ const Search = () => {
         data={cities}
         renderItem={({item}) => {
           return (
-            <Card style={{margin: 2, padding: 12}}>
+            <Card style={{margin: 2, padding: 12}} onPress={() => {listClick(item.name)}}>
               <Text>{item}</Text>
             </Card>
           );
