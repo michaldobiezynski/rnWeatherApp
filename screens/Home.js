@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, Image} from 'react-native';
 import {TextInput, Button, Card, Title} from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import Header from './Header';
 
 const Home = (props) => {
@@ -12,10 +14,12 @@ const Home = (props) => {
     icon: 'loading',
   });
 
-  const getWeather = () => {
-      let myCity;
-      const {city} = props.route.params;
-      myCity = city;
+  const getWeather = async () => {
+      let myCity = await AsyncStorage.getItem('newcity');
+      if(myCity === undefined) {
+          const {city} = props.route.params;
+          myCity = city;
+      }
 
     fetch(`http://api.weatherstack.com/current?access_key=fc87f55c77c5849e40978cc051a3cd02&query=${myCity}&units=m`)
         .then(data=>data.json())
