@@ -20,6 +20,7 @@ const Home = (props) => {
     fetch(`http://api.weatherstack.com/current?access_key=fc87f55c77c5849e40978cc051a3cd02&query=${myCity}&units=m`)
         .then(data=>data.json())
         .then(results => {
+            console.log('I am in fetch weather')
             console.log(results.location.name);
             setInfo({
                 name: results.location.name,
@@ -38,6 +39,7 @@ const Home = (props) => {
 
 
   useEffect(() => {
+      console.log("I am here")
       console.log(props.route.params)
       if(props.route.params.city !== undefined) {
           getWeather();
@@ -45,7 +47,7 @@ const Home = (props) => {
       if(props.route.params.city !== "Edinburgh") {
         getWeather()
     }
-  }, []);
+  }, [props]);
 
   return (
     <View style={{flex: 1}}>

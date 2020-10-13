@@ -33,12 +33,15 @@ const Search = ({navigation}) => {
   };
 
   const btnClick = () => {
-    navigation.navigate("home",{city:city})
+    navigation.navigate('home',{city:city})
   }
 
   const listClick = (cityName) => {
+    console.log('I was clicked');
+    console.log(cityName);
+    console.log(city);
     setCity(cityName);
-    navigation.navigate("home",{city:cityName})
+    navigation.navigate('home',{city:cityName})
 
   }
 
@@ -66,7 +69,7 @@ const Search = ({navigation}) => {
         data={cities}
         renderItem={({item}) => {
           return (
-            <Card style={{margin: 2, padding: 12}} onPress={() => {listClick(item.name)}}>
+            <Card style={{margin: 2, padding: 12}} onPress={() => {listClick(item)}}>
               <Text>{item}</Text>
             </Card>
           );
